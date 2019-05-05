@@ -75,7 +75,7 @@ func readLastDate(filepath, dateFormat string) (time.Time, error) {
 	if err != nil {
 		return time.Time{}, err
 	}
-	return time.Parse(dateFormat, strings.Trim(string(st), "/n"))
+	return time.Parse(dateFormat, strings.Trim(string(st), "\n"))
 }
 
 func saveLastDate(date time.Time) error {
