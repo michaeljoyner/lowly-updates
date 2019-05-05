@@ -25,7 +25,7 @@ func main() {
 	}
 
 	const dateForm = "Mon, 2 Jan 2006  03:04:05 -0700"
-	t, err := readLastDate(fmt.Sprintf("%v/last_date"), dateForm)
+	t, err := readLastDate(fmt.Sprintf("%v/last_date", dir), dateForm)
 	if err != nil {
 		log.Fatal(err)
 	}
