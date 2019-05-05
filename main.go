@@ -25,7 +25,7 @@ func main() {
 	}
 
 	const dateForm = "Mon, 2 Jan 2006  03:04:05 -0700"
-	t, err := readLastDate(dateForm)
+	t, err := readLastDate(fmt.Sprintf("%v/last_date"), dateForm)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -69,8 +69,8 @@ func main() {
 	}
 }
 
-func readLastDate(dateFormat string) (time.Time, error) {
-	st, err := ioutil.ReadFile("last_date")
+func readLastDate(filepath, dateFormat string) (time.Time, error) {
+	st, err := ioutil.ReadFile(filepath)
 	if err != nil {
 		return time.Time{}, err
 	}
