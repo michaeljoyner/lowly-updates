@@ -26,7 +26,8 @@ func main() {
 	}
 
 	const dateForm = "Mon, 2 Jan 2006  03:04:05 -0700"
-	t, err := readLastDate(fmt.Sprintf("%v/last_date", dir), dateForm)
+	lastDatePath := fmt.Sprintf("%v/last_date", dir)
+	t, err := readLastDate(lastDatePath, dateForm)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -64,13 +65,13 @@ func main() {
 		log.Fatal(err)
 	}
 
-	err = saveLastDate(time.Now())
+	err = saveLastDate(lastDatePath, time.Now())
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-func readLastDate(filepath, dateFormat string) (time.Time, error) {
+func readLastDate(filepath string, dateFormat string) (time.Time, error) {
 	st, err := ioutil.ReadFile(filepath)
 	if err != nil {
 		return time.Time{}, err
@@ -78,9 +79,9 @@ func readLastDate(filepath, dateFormat string) (time.Time, error) {
 	return time.Parse(dateFormat, strings.Trim(string(st), "\n"))
 }
 
-func saveLastDate(date time.Time) error {
+func saveLastDate(filepath string, date time.Time) error {
 	dateString := date.Format("Mon, 2 Jan 2006  03:04:05 -0700")
-	return ioutil.WriteFile("last_date", []byte(dateString), 0644)
+	return ioutil.WriteFile(filepath, []byte(dateString), 0766)
 }
 
 func mailBody(items []gofeed.Item) string {
